@@ -12,3 +12,4 @@ pnpm-debug.log*
 .vscode
 .idea
 EOF
+project_notes.md

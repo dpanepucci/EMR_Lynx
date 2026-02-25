@@ -13,3 +13,4 @@ pnpm-debug.log*
 .idea
 EOF
 project_notes.md
+.nvmrc

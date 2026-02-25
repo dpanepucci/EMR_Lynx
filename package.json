@@ -1,7 +1,11 @@
 {
   "name": "nursing-emr",
   "private": true,
-  "workspaces": ["api", "web", "packages/*"],
+  "workspaces": [
+    "api",
+    "web",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "npm run dev -w api & npm run dev -w web",
     "dev:api": "npm run dev -w api",
@@ -11,6 +15,13 @@
     "format": "prettier -w ."
   },
   "devDependencies": {
-    "prettier": "^3.0.0"
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "prettier": "^3.0.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   }
 }

@@ -4,7 +4,7 @@ import LinkedIn from '../assets/icons/LinkedIn.svg?react';
 
 function Login () {
     return (
-        <>
+    <div id='login_main_page'>
         <h1>Welcome to Axis Lynx EMR</h1>
         <form id="login_form">
             <div>
@@ -16,7 +16,7 @@ function Login () {
                 <input type="password" id="password" name="password" required></input>
             </div>
 
-            <button type="submit" id="login">Login</button>
+            <button type="submit" id="login_btn">Login</button>
             <div>
                 <p>Don't have an account? <a href="/api/register">Register Here</a></p>
             </div>
@@ -39,8 +39,7 @@ function Login () {
                 </a>
             </div>
         </footer>
-
-        </>
+    </div>
     )
 };
 

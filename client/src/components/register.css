@@ -7,7 +7,7 @@ h1 {
     color: #fff;
 }
 
-#login_main_page {
+#register_page {
     background-image: url('../assets/med.jpg');
     background-size:100%;
     background-repeat: no-repeat;
@@ -15,14 +15,8 @@ h1 {
     height:100%;
 }
 
-#footer_icons, #createdBy {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap: 20px;
-}
 
-#login_form {
+#register_form {
     background-color: rgb(207, 182, 149);
     border:solid 5px rgb(59, 59, 62);
     width:250px;
@@ -31,16 +25,16 @@ h1 {
     border-radius: 15%;
 }
 
-#login_form, div {
+#register_form, div {
     padding:20px;
 }
 
-#login_form, label {
+#register_form, label {
     font-style: italic;
     font-weight: 600;
     color:black
 }
 
-#login_form, a {
+#register_form, a {
     color:blue
 }

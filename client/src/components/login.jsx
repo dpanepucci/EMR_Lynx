@@ -1,6 +1,4 @@
 import './login.css';
-import GithubIcon from '../assets/icons/github.svg?react';
-import LinkedIn from '../assets/icons/LinkedIn.svg?react';
 
 function Login () {
     return (
@@ -21,24 +19,6 @@ function Login () {
                 <p>Don't have an account? <a href="/api/register">Register Here</a></p>
             </div>
         </form>
-
-        <footer>
-            <p>Created by: D.Panepucci</p>
-            <div id="footer_icons">
-                <a
-                href="https://github.com/dpanepucci"
-                target="_blank"
-                rel="noopener noreferrer">
-                <GithubIcon width={44} />
-                </a>
-                <a
-                href="https://linkedin.com/in/dylan-panepucci"
-                target="_blank"
-                rel="noopener noreferrer">
-                <LinkedIn width={44} />
-                </a>
-            </div>
-        </footer>
     </div>
     )
 };

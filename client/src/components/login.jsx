@@ -39,7 +39,7 @@ function Login () {
 
     return (
     <div id='login_main_page'>
-        <h1>Welcome to Axis Lynx EMR</h1>
+        <h1 id='welcomeheader'>Welcome to Axis Lynx EMR</h1>
         <form id="login_form" onSubmit={ handleSubmit }>
             <div>
                 <label htmlFor="username">Username: </label>
@@ -69,9 +69,32 @@ function Login () {
             <button type="submit" id="login_btn">Login</button>
             {statusMessage && <p>{statusMessage}</p>}
             <div>
-                <p>Don't have an account? <a href="/register">Register Here</a></p>
+                <p id='dontHaveAccount'>Don't have an account? <a href="/register">Register Here</a></p>
             </div>
         </form>
+
+        <footer id='footer_plug'>
+            <p id="createdBy">Created by: D.Panepucci</p>
+                <br></br>
+            <div id="footer_icons">
+                <a
+                href="https://github.com/dpanepucci"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                >
+                <img src="/icons/github.svg" width="44" height="44" alt="GitHub" />
+                </a>
+                <a
+                href="https://linkedin.com/in/dylan-panepucci"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                >
+                <img src="/icons/linkedin.svg" width="44" height="44" alt="LinkedIn" />
+                </a>
+            </div>
+        </footer>
     </div>
     )
 };

@@ -3,7 +3,7 @@ import './register.css';
 function Register () {
     return (
         <div id='register_page'>
-        <h1>Register Page</h1>
+        <h1 id='registerHeader'>Register Page</h1>
             <form id="register_form">
             <div>
                 <label htmlFor="username">Username: </label>
@@ -19,6 +19,7 @@ function Register () {
             </div>
 
             <button type="submit" id="register_btn">Register</button>
+            <p id='backToLogin'><a href="/login">Back to Login</a></p>
             </form>
         </div>
     )

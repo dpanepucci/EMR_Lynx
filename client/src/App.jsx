@@ -16,7 +16,7 @@ function App() {
         <div id='pt_profile'>
           <img
           id='proPic'
-            src='./public/defProPic.png'
+            src='./defProPic.png'
             alt='default profile picture icon'
           />
           <li>

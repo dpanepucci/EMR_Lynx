@@ -29,7 +29,7 @@ function Register () {
 
             localStorage.setItem('emr_user', JSON.stringify(result.user));
             setStatusMessage('Registration successful.');
-            setloginData({ username: '', password: '', reg_code: ''});
+            setRegData({ username: '', password: '', reg_code: ''});
             navigate('/');
         } catch (error) {
             setStatusMessage('Unable to reach backend server.');

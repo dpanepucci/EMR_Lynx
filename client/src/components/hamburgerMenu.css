@@ -1,0 +1,30 @@
+#hamburgerMenu {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: space-around;
+    flex-flow: column nowrap;
+    z-index: 10
+}
+
+.burger {
+    width: 2rem;
+    height: 0.25rem;
+    border-radius: 10px;
+    background-color: black;
+    transform-origin: 1px;
+    transition: all 0.3s linear;
+}
+
+#hamburgerMenu.open .burger:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+#hamburgerMenu.open .burger:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+#hamburgerMenu.open .burger:nth-child(3) {
+    transform: rotate(-45deg);
+}

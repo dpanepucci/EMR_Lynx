@@ -1,13 +1,6 @@
-import { useState } from "react";
 import "./patient.css";
-import Hamburger from "./hamburgerMenu.jsx";
 
 function Patient() {
-  const [HamburgerOpen, setHamburgerOpen] = useState(false);
-
-  const toggleHamburgerIcon = () => {
-    setHamburgerOpen(!HamburgerOpen);
-  };
 
   return (
     <>
@@ -33,3 +26,5 @@ function Patient() {
 export default Patient;
 
 // REFACTOR TO LINK TO PATIENT THAT IS SELECTED FROM THE MAIN PAGE
+// Will show all patients assigned.
+// Add vital signs to this field 

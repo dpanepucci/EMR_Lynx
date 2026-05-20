@@ -1,0 +1,10 @@
+h1 {
+    color: gray;
+}
+
+#freeNotes {
+    width:200px;
+    height:100px;
+    resize: none;
+    text-align: center;
+}

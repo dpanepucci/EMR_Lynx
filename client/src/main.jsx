@@ -3,7 +3,7 @@ import "./index.css";
 import App from "./App.jsx";
 import Login from "./components/login.jsx";
 import Register from "./components/register.jsx";
-import Patient from "./components/patient.jsx";
+import Patient from "./emr_components/patient.jsx";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "./protectedRoutes.jsx";

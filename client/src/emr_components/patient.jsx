@@ -4,7 +4,8 @@ function Patient() {
 
   return (
     <>
-      <div>
+      <div id='patient_navbar'>
+        <div>
         <h1>Patients</h1>
       </div>
       {/* Side Patient Snap Shot */}
@@ -18,6 +19,7 @@ function Patient() {
         <li>D.O.B:</li>
         <li>Room:</li>
         <li>Dx:</li>
+      </div>
       </div>
     </>
   );

@@ -5,6 +5,8 @@ import Login from "./components/login.jsx";
 import Register from "./components/register.jsx";
 import Patient from "./emr_components/patient.jsx";
 
+import HamComponent from "./components/hamburgerComponent.jsx";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "./protectedRoutes.jsx";
 
@@ -17,8 +19,9 @@ createRoot(document.getElementById("root")).render(
         path="*"
         element={
           <ProtectedRoute>
-            <App />
+            <HamComponent />
             <Routes>
+              <Route path='/' element={<App/>} />
               <Route path="/patient" element={<Patient />} />
             </Routes>
           </ProtectedRoute>

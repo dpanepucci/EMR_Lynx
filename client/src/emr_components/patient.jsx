@@ -27,6 +27,7 @@ function Patient() {
 
 export default Patient;
 
-// REFACTOR TO LINK TO PATIENT THAT IS SELECTED FROM THE MAIN PAGE
+// Link to patient individual charts from this page
 // Will show all patients assigned.
 // Add vital signs to this field 
+// Quick view page

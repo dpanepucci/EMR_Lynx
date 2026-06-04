@@ -8,3 +8,13 @@ h1 {
     resize: none;
     text-align: center;
 }
+
+#savedNotes {
+    border:solid 3px white;
+
+}
+
+#notesDate {
+    font-weight: bolder;
+    color: white;
+}

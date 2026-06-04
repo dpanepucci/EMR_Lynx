@@ -1,102 +1,99 @@
-import { useNavigate } from "react-router-dom";
-import "./register.css";
-import { useState } from "react";
+import { useNavigate } from 'react-router-dom'
+import './register.css'
+import { useState } from 'react'
 
-function Register() {
-  const navigate = useNavigate();
+function Register () {
+  const navigate = useNavigate()
   const [regData, setRegData] = useState({
-    username: "",
-    password: "",
-    reg_code: "",
-  });
-  const [statusMessage, setStatusMessage] = useState();
+    username: '',
+    password: '',
+    reg_code: ''
+  })
+  const [statusMessage, setStatusMessage] = useState()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-      const response = await fetch("/api/register", {
-        method: "POST",
+      const response = await fetch('/api/register', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(regData),
-      });
+        body: JSON.stringify(regData)
+      })
 
-      const result = await response.json();
+      const result = await response.json()
 
       if (!response.ok) {
-        setStatusMessage(result.message || "Login failed.");
-        return;
+        setStatusMessage(result.message || 'Login failed.')
+        return
       }
 
-      localStorage.setItem("emr_user", JSON.stringify(result.user));
-      setStatusMessage("Registration successful.");
-      setRegData({ username: "", password: "", reg_code: "" });
-      navigate("/");
+      localStorage.setItem('emr_user', JSON.stringify(result.user))
+      setStatusMessage('Registration successful.')
+      setRegData({ username: '', password: '', reg_code: '' })
+      navigate('/')
     } catch (error) {
-      setStatusMessage("Unable to reach backend server.");
-      console.error(error);
+      setStatusMessage('Unable to reach backend server.')
+      console.error(error)
     }
-  };
+  }
 
   return (
-    <div id="register_page">
-      <h1 id="registerHeader">Register Page</h1>
-      <form id="register_form" onSubmit={handleSubmit}>
+    <div id='register_page'>
+      <h1 id='registerHeader'>Register Page</h1>
+      <form id='register_form' onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Username: </label>
+          <label htmlFor='username'>Username: </label>
           <input
-            type="text"
-            placeholder="username"
+            type='text'
+            placeholder='username'
             value={regData.username}
             onChange={(e) =>
-              setRegData({ ...regData, username: e.target.value })
-            }
-            id="username"
-            name="username"
+              setRegData({ ...regData, username: e.target.value })}
+            id='username'
+            name='username'
             required
-          ></input>
+          />
         </div>
         <div>
-          <label htmlFor="password">Password: </label>
+          <label htmlFor='password'>Password: </label>
           <input
-            type="text"
-            placeholder="password"
+            type='text'
+            placeholder='password'
             value={regData.password}
             onChange={(e) =>
-              setRegData({ ...regData, password: e.target.value })
-            }
-            id="password"
-            name="password"
+              setRegData({ ...regData, password: e.target.value })}
+            id='password'
+            name='password'
             required
-          ></input>
+          />
         </div>
         <div>
-          <label htmlFor="registerPassword">Registration Code: </label>
+          <label htmlFor='registerPassword'>Registration Code: </label>
           <input
-            type="password"
-            placeholder="registration"
+            type='password'
+            placeholder='registration'
             value={regData.reg_code}
             onChange={(e) =>
-              setRegData({ ...regData, reg_code: e.target.value })
-            }
-            id="registerpassword"
-            name="registration"
+              setRegData({ ...regData, reg_code: e.target.value })}
+            id='registerpassword'
+            name='registration'
             required
-          ></input>
+          />
         </div>
 
-        <button type="submit" id="register_btn">
+        <button type='submit' id='register_btn'>
           Register
         </button>
         {statusMessage && <p>{statusMessage}</p>}
-        <p id="backToLogin">
-          <a href="/login">Back to Login</a>
+        <p id='backToLogin'>
+          <a href='/login'>Back to Login</a>
         </p>
       </form>
     </div>
-  );
+  )
 }
 
-export default Register;
+export default Register

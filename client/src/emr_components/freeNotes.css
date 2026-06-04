@@ -2,19 +2,54 @@ h1 {
     color: gray;
 }
 
+#container {
+    border:solid 1px white;
+    margin:100px;
+    border-radius: 10px;
+    max-width: 400px;
+    min-width: 400px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 #freeNotes {
     width:200px;
     height:100px;
     resize: none;
     text-align: center;
+    border-radius: 10px;
 }
 
-#savedNotes {
-    border:solid 3px white;
-
+#noNotesSaved, #savedNotes {
+    border:solid 1px white;
+    border-radius: 10px;
+    margin:5px;
+    padding:10px;
+    background-color: lightgray;
+    color:black;
+    font-weight: 600;
+    max-width: 300px;
 }
 
 #notesDate {
     font-weight: bolder;
-    color: white;
+    color: black;
+    border:solid 1px;
+    background-color: grey;
+}
+
+#freeNotesSave {
+    margin: 10px;
+    border-radius: 10px;
+}
+
+#freeNotesClear {
+    border-radius: 10px;
+    background-color: black;
+}
+
+#noNotesSaved {
+    color:red;
 }

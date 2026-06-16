@@ -28,3 +28,11 @@
 #hamburgerMenu.open .burger:nth-child(3) {
   transform: rotate(-45deg);
 }
+
+#mainPageBtn, #patientPageBtn {
+  background-color: #2d8b8b;
+  border-radius: 5px;
+  width:80px;
+  height: 40px;
+  
+}

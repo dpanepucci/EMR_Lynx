@@ -1,0 +1,51 @@
+:root {
+  --color-navy:        #1a2b4a;
+  --color-teal:        #2d8b8b;
+  --color-teal-light:  #e8f4f4;
+  --color-bg:          #f5f8fa;
+  --color-surface:     #ffffff;
+  --color-border:      #d1dce8;
+  --color-text:        #2d3748;
+  --color-muted:       #718096;
+  --color-danger:      #c0392b;
+  --color-danger-bg:   #fdf2f0;
+
+  --radius:            6px;
+  --font-ui:           -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-notes:        'Courier New', Courier, monospace;
+}
+
+#careTeamContainer {
+  font-family: var(--font-ui);
+  background-color: var(--color-bg);
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 1.75rem 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(26, 43, 74, 0.08);
+}
+
+#careTeamContainer h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin: 0 0 1.25rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--color-teal);
+}
+
+.chatTeam {
+  margin-top: 0.875rem;
+  padding: 0.5rem 1.25rem;
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}

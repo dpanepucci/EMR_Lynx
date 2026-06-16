@@ -4,6 +4,16 @@
   background-color: lightgray;
   position: relative;
   overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 64px;
+  box-sizing: border-box;
+}
+
+#hamburgerNav button {
+  margin: 0;
 }
 
 #hamburgerNav ul {

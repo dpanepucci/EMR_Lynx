@@ -15,13 +15,11 @@ function HamComponent () {
         <h1>Healthcare Inc.</h1>
       </div>
       <div id='hamburgerNav'>
-        <p id='Axis'>Axis Lynx - EMR</p>
-
-        <button>
-          <a href='/'>Main Page</a>
+        <button id='mainPageBtn'>
+          <a href='/'>Home</a>
         </button>
-        <button>
-          <a href='/patient'>Patient Route</a>
+        <button id='patientPageBtn'>
+          <a href='/patient'>Patients</a>
         </button>
 
         <ul className={HamburgerOpen ? 'menu open' : 'menu'}>

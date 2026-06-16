@@ -2,6 +2,12 @@
 /* Main page component layout */
 #main_page_layout {
   display: flex;
+  flex-direction: row;
+  gap: 10px;
+  background-color: #738080
 }
 
+#mainPageComp {
+  padding-left: 15px;
+}
 

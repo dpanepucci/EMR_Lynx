@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cometchat/chat-sdk-javascript": "4.1.11",
+    "@cometchat/chat-uikit-react": "6.4.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.15.0"

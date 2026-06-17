@@ -4,6 +4,7 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vite.dev/config/
 export default defineConfig({
+  envPrefix: ['VITE_', 'REACT_APP_'],
   plugins: [react(), svgr()],
   server: {
     proxy: {

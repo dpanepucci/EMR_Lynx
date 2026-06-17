@@ -4,9 +4,15 @@ import './hamburgerComponent.css'
 
 function HamComponent () {
   const [HamburgerOpen, setHamburgerOpen] = useState(false)
+  const currentUser = JSON.parse(localStorage.getItem('emr_user') || 'null')
+  const displayName = currentUser?.username || 'User'
 
   const toggleHamburgerIcon = () => {
     setHamburgerOpen(!HamburgerOpen)
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('emr_user')
   }
 
   return (
@@ -14,6 +20,9 @@ function HamComponent () {
       <div>
         <h1>Healthcare Inc.</h1>
       </div>
+
+      <p className='loggedInUser'>Signed in: {displayName}</p>
+      
       <div id='hamburgerNav'>
         <button id='mainPageBtn'>
           <a href='/'>Home</a>
@@ -26,12 +35,14 @@ function HamComponent () {
           <li>Settings</li>
           <li>Profile</li>
           <li>
-            <a href='/login'>Log Out</a>
+            <a href='/login' onClick={handleLogout}>Log Out</a>
           </li>
         </ul>
 
-        <div className='navIcon' onClick={toggleHamburgerIcon}>
-          <Hamburger isOpen={HamburgerOpen} />
+        <div className='navAccountArea'>
+          <div className='navIcon' onClick={toggleHamburgerIcon}>
+            <Hamburger isOpen={HamburgerOpen} />
+          </div>
         </div>
 
       </div>

@@ -45,11 +45,33 @@
 }
 
 .navIcon {
+  position: static;
+  transform: none;
+  cursor: pointer;
+}
+
+.navAccountArea {
   position: absolute;
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.loggedInUser {
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 16px;
+  font-size: 0.72rem;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
 }
 
 #Axis {

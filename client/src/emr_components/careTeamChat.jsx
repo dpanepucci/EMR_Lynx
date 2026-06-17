@@ -16,8 +16,7 @@ const getEnv = (viteKey, reactKey) =>
 const COMETCHAT_CONSTANTS = {
     APP_ID: getEnv('VITE_COMETCHAT_APP_ID', 'REACT_APP_COMETCHAT_APP_ID'),
     REGION: getEnv('VITE_COMETCHAT_REGION', 'REACT_APP_COMETCHAT_REGION'),
-    AUTH_KEY: getEnv('VITE_COMETCHAT_AUTH_KEY', 'REACT_APP_COMETCHAT_AUTH_KEY'),
-    UID: getEnv('VITE_COMETCHAT_UID', 'REACT_APP_COMETCHAT_UID'),
+    AUTH_KEY: getEnv('VITE_COMETCHAT_AUTH_KEY', 'REACT_APP_COMETCHAT_AUTH_KEY')
 }
 
 const isPlaceholderValue = (value) => {
@@ -64,6 +63,19 @@ const CARE_TEAM_MEMBERS = parseCareTeamMembers(
     getEnv('VITE_CARE_TEAM_MEMBERS', 'REACT_APP_CARE_TEAM_MEMBERS')
 )
 
+const getStoredEmrUser = () => {
+    try {
+        return JSON.parse(localStorage.getItem('emr_user') || 'null')
+    } catch {
+        return null
+    }
+}
+
+const getCurrentCometChatUid = () => {
+    const emrUser = getStoredEmrUser()
+    return emrUser?.cometchat_uid || ''
+}
+
 const buildUiKitSettings = () =>
     new UIKitSettingsBuilder()
         .setAppId(COMETCHAT_CONSTANTS.APP_ID)
@@ -108,21 +120,36 @@ const formatCometChatError = (error, fallback) => {
 }
 
 const ensureCurrentUserLoggedIn = async () => {
+    const currentUid = getCurrentCometChatUid()
+
+    if (!currentUid) {
+        throw new Error('Missing CometChat UID for current signed-in user.')
+    }
+
     const loggedInUser = await CometChatUIKit.getLoggedinUser()
 
     if (loggedInUser) {
-        return loggedInUser
+        const activeUid =
+            (typeof loggedInUser.getUid === 'function' && loggedInUser.getUid()) ||
+            loggedInUser.uid ||
+            ''
+
+        if (activeUid && activeUid !== currentUid) {
+            await CometChatUIKit.logout()
+        } else {
+            return loggedInUser
+        }
     }
 
     try {
-        return await CometChatUIKit.login(COMETCHAT_CONSTANTS.UID)
+        return await CometChatUIKit.login(currentUid)
     } catch (loginError) {
         if (!COMETCHAT_CONSTANTS.AUTH_KEY) {
             throw loginError
         }
 
-        const currentUser = new CometChat.User(COMETCHAT_CONSTANTS.UID)
-        currentUser.setName(COMETCHAT_CONSTANTS.UID)
+        const currentUser = new CometChat.User(currentUid)
+        currentUser.setName(currentUid)
 
         try {
             await CometChatUIKit.createUser(currentUser, COMETCHAT_CONSTANTS.AUTH_KEY)
@@ -134,7 +161,7 @@ const ensureCurrentUserLoggedIn = async () => {
             }
         }
 
-        return await CometChatUIKit.login(COMETCHAT_CONSTANTS.UID)
+        return await CometChatUIKit.login(currentUid)
     }
 }
 
@@ -142,7 +169,8 @@ function CareTeam () {
     const [selectedUser, setSelectedUser] = useState(undefined)
     const [isReady, setIsReady] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
-    const [selectedMemberUid, setSelectedMemberUid] = useState(CARE_TEAM_MEMBERS[0].uid)
+    const [careTeamMembers, setCareTeamMembers] = useState(CARE_TEAM_MEMBERS)
+    const [selectedMemberUid, setSelectedMemberUid] = useState(CARE_TEAM_MEMBERS[0]?.uid || '')
 
     const hasCredentials = useMemo(
         () =>
@@ -150,7 +178,7 @@ function CareTeam () {
                 !isPlaceholderValue(COMETCHAT_CONSTANTS.APP_ID) &&
                     !isPlaceholderValue(COMETCHAT_CONSTANTS.REGION) &&
                     !isPlaceholderValue(COMETCHAT_CONSTANTS.AUTH_KEY) &&
-                    !isPlaceholderValue(COMETCHAT_CONSTANTS.UID)
+                    !isPlaceholderValue(getCurrentCometChatUid())
             ),
         []
     )
@@ -174,8 +202,13 @@ function CareTeam () {
         let isMounted = true
 
         if (!hasCredentials) {
+            const currentUid = getCurrentCometChatUid()
+            const needsRelogin = !currentUid || isPlaceholderValue(currentUid)
+
             setErrorMessage(
-                'Set real values for COMETCHAT env vars in client/.env using either VITE_ or REACT_APP_ prefixes. Placeholder values are not valid.'
+                needsRelogin
+                    ? 'This account is missing a CometChat UID. Log out and log back in so your user session includes cometchat_uid.'
+                    : 'Set real values for COMETCHAT env vars in client/.env using either VITE_ or REACT_APP_ prefixes. Placeholder values are not valid.'
             )
             return () => {
                 isMounted = false
@@ -223,7 +256,13 @@ function CareTeam () {
             return
         }
 
-        const activeMember = CARE_TEAM_MEMBERS.find((member) => member.uid === selectedMemberUid) || CARE_TEAM_MEMBERS[0]
+        const activeMember =
+            careTeamMembers.find((member) => member.uid === selectedMemberUid) ||
+            careTeamMembers[0]
+
+        if (!activeMember) {
+            return
+        }
 
         getCometChatUser(activeMember.uid, activeMember.name)
             .then((user) => {
@@ -234,7 +273,48 @@ function CareTeam () {
                     formatCometChatError(error, `Unable to load ${activeMember.name}.`)
                 )
             })
-    }, [isReady, selectedMemberUid])
+    }, [isReady, selectedMemberUid, careTeamMembers])
+
+    useEffect(() => {
+        if (!isReady) {
+            return
+        }
+
+        const loadSupabaseUsers = async () => {
+            try {
+                const response = await fetch('/api/chat/users')
+                const result = await response.json()
+
+                if (!response.ok || !result?.ok) {
+                    throw new Error(result?.message || 'Failed to fetch chat users.')
+                }
+
+                const currentUid = getCurrentCometChatUid()
+                const usersFromDb = (result.users || [])
+                    .filter((user) => user.cometchat_uid !== currentUid)
+                    .map((user) => ({
+                        name: user.username,
+                        uid: user.cometchat_uid
+                    }))
+
+                if (usersFromDb.length) {
+                    setCareTeamMembers(usersFromDb)
+                    setSelectedMemberUid((prevUid) => {
+                        if (usersFromDb.some((member) => member.uid === prevUid)) {
+                            return prevUid
+                        }
+                        return usersFromDb[0].uid
+                    })
+                }
+            } catch (error) {
+                setErrorMessage(
+                    formatCometChatError(error, 'Failed to load care team members from database.')
+                )
+            }
+        }
+
+        loadSupabaseUsers()
+    }, [isReady])
 
     return (
         <section id='careTeamContainer'>
@@ -243,7 +323,6 @@ function CareTeam () {
                     <p className='careTeamEyebrow'>Clinical messaging</p>
                     <h3>Care Team Chat</h3>
                 </div>
-                <p className='careTeamSubtext'>Secure team messaging with live conversation sync.</p>
             </header>
 
             {!isReady ? (
@@ -254,9 +333,9 @@ function CareTeam () {
                 <div className='careTeamShell'>
                     <aside className='careTeamSidebar'>
                         <div className='careTeamSidebarTitle'>Team Members</div>
-                        <p className='careTeamConfigHint'>Configure via VITE_CARE_TEAM_MEMBERS or REACT_APP_CARE_TEAM_MEMBERS.</p>
+
                         <div className='careTeamButtonList'>
-                            {CARE_TEAM_MEMBERS.map((member) => (
+                            {careTeamMembers.map((member) => (
                                 <button
                                     key={member.uid}
                                     type='button'

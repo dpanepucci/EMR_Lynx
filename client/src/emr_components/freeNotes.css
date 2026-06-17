@@ -42,6 +42,7 @@
 }
 
 #savedNotes {
+  position: relative;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-left: 4px solid var(--color-teal);
@@ -54,6 +55,68 @@
   line-height: 1.6;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.savedNoteCard {
+  padding-right: 7.2rem;
+}
+
+.savedNoteActions {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.65rem;
+  display: flex;
+  gap: 0.35rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+
+.savedNoteCard:hover .savedNoteActions,
+.savedNoteActionsVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.savedNoteActionButton {
+  border: 1px solid var(--color-border);
+  background: #fff;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.7rem;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  color: var(--color-navy);
+  cursor: pointer;
+}
+
+.savedNoteActionButton:hover {
+  border-color: var(--color-teal);
+}
+
+.savedNoteActionDelete {
+  color: var(--color-danger);
+  border-color: #e8c5c0;
+  background: var(--color-danger-bg);
+}
+
+.savedNoteActionCancel {
+  color: var(--color-muted);
+}
+
+.savedNoteEditor {
+  width: 100%;
+  min-height: 110px;
+  box-sizing: border-box;
+  margin-top: 0.15rem;
+  margin-bottom: 0.5rem;
+  padding: 0.6rem;
+  font-family: var(--font-notes);
+  font-size: 0.84rem;
+  line-height: 1.5;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  resize: vertical;
 }
 
 p#notesDate {

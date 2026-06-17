@@ -26,7 +26,7 @@ function Register () {
       const result = await response.json()
 
       if (!response.ok) {
-        setStatusMessage(result.message || 'Login failed.')
+        setStatusMessage(result.message || 'Registration failed.')
         return
       }
 

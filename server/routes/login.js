@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import supabase from '../db/supabaseServer.js'
+import { buildCometChatUid } from '../lib/cometchat.js'
 
 const supabaseLogin = Router()
 
@@ -39,7 +40,10 @@ supabaseLogin.post('/', async (req, res) => {
   return res.json({
     ok: true,
     message: 'Login successful.',
-    user: data
+    user: {
+      ...data,
+      cometchat_uid: buildCometChatUid(data)
+    }
   })
 })
 

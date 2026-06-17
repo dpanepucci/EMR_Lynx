@@ -26,6 +26,9 @@ function Login () {
         return
       }
 
+      if (result.token) {
+        localStorage.setItem('emr_token', result.token)
+      }
       localStorage.setItem('emr_user', JSON.stringify(result.user))
       setStatusMessage('Login successful.')
       setloginData({ username: '', password: '' })

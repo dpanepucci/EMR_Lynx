@@ -30,6 +30,9 @@ function Register () {
         return
       }
 
+      if (result.token) {
+        localStorage.setItem('emr_token', result.token)
+      }
       localStorage.setItem('emr_user', JSON.stringify(result.user))
       setStatusMessage('Registration successful.')
       setRegData({ username: '', password: '', reg_code: '' })
@@ -60,7 +63,7 @@ function Register () {
         <div>
           <label htmlFor='password'>Password: </label>
           <input
-            type='text'
+            type='password'
             placeholder='password'
             value={regData.password}
             onChange={(e) =>

@@ -13,6 +13,7 @@ function HamComponent () {
 
   const handleLogout = () => {
     localStorage.removeItem('emr_user')
+    localStorage.removeItem('emr_token')
   }
 
   return (

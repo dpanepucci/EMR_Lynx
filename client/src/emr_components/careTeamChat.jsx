@@ -282,7 +282,9 @@ function CareTeam () {
 
         const loadSupabaseUsers = async () => {
             try {
-                const response = await fetch('/api/chat/users')
+                const response = await fetch('/api/chat/users', {
+                    credentials: 'include'
+                })
                 const result = await response.json()
 
                 if (!response.ok || !result?.ok) {

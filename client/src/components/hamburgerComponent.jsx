@@ -12,8 +12,12 @@ function HamComponent () {
   }
 
   const handleLogout = () => {
+    fetch('/api/login/logout', {
+      method: 'POST',
+      credentials: 'include'
+    }).catch(() => {})
+
     localStorage.removeItem('emr_user')
-    localStorage.removeItem('emr_token')
   }
 
   return (

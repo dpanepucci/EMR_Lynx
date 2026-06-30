@@ -1,7 +1,14 @@
 import { Router } from 'express'
 import supabase from '../db/supabaseServer.js'
 import { buildCometChatUid } from '../lib/cometchat.js'
-import { hashPassword, signAuthToken, verifyPassword } from '../lib/auth.js'
+import {
+  clearAuthCookie,
+  hashPassword,
+  setAuthCookie,
+  signAuthToken,
+  verifyPassword
+} from '../lib/auth.js'
+import { getRoleFromCode } from '../lib/roles.js'
 
 const supabaseLogin = Router()
 
@@ -17,7 +24,7 @@ supabaseLogin.post('/', async (req, res) => {
 
   const { data, error } = await supabase
     .from('login_table')
-    .select('id, username, password')
+    .select('id, username, password, reg_code')
     .eq('username', username)
     .limit(1)
     .maybeSingle()
@@ -52,9 +59,10 @@ supabaseLogin.post('/', async (req, res) => {
   }
 
   let token
+  const role = getRoleFromCode(data.reg_code)
 
   try {
-    token = signAuthToken(data)
+    token = signAuthToken({ ...data, role })
   } catch (tokenError) {
     return res.status(500).json({
       ok: false,
@@ -62,17 +70,23 @@ supabaseLogin.post('/', async (req, res) => {
     })
   }
 
-  const { password: _password, ...safeUser } = data
+  const { password: _password, reg_code: _regCode, ...safeUser } = data
+  setAuthCookie(res, token)
 
   return res.json({
     ok: true,
     message: 'Login successful.',
-    token,
     user: {
       ...safeUser,
+      role,
       cometchat_uid: buildCometChatUid(safeUser)
     }
   })
+})
+
+supabaseLogin.post('/logout', (req, res) => {
+  clearAuthCookie(res)
+  return res.json({ ok: true, message: 'Logged out.' })
 })
 
 export default supabaseLogin

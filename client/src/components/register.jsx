@@ -7,7 +7,7 @@ function Register () {
   const [regData, setRegData] = useState({
     username: '',
     password: '',
-    reg_code: ''
+    role_code: ''
   })
   const [statusMessage, setStatusMessage] = useState()
 
@@ -20,6 +20,7 @@ function Register () {
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(regData)
       })
 
@@ -30,12 +31,10 @@ function Register () {
         return
       }
 
-      if (result.token) {
-        localStorage.setItem('emr_token', result.token)
-      }
+      localStorage.removeItem('emr_token')
       localStorage.setItem('emr_user', JSON.stringify(result.user))
       setStatusMessage('Registration successful.')
-      setRegData({ username: '', password: '', reg_code: '' })
+      setRegData({ username: '', password: '', role_code: '' })
       navigate('/')
     } catch (error) {
       setStatusMessage('Unable to reach backend server.')
@@ -74,15 +73,15 @@ function Register () {
           />
         </div>
         <div>
-          <label htmlFor='registerPassword'>Registration Code: </label>
+          <label htmlFor='registerPassword'>Role Code: </label>
           <input
             type='password'
-            placeholder='registration'
-            value={regData.reg_code}
+            placeholder='role code'
+            value={regData.role_code}
             onChange={(e) =>
-              setRegData({ ...regData, reg_code: e.target.value })}
+              setRegData({ ...regData, role_code: e.target.value })}
             id='registerpassword'
-            name='registration'
+            name='role_code'
             required
           />
         </div>
